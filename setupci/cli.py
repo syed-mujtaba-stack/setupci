@@ -126,6 +126,84 @@ def copy_template(src_traversable, dest_path):
         content = src_traversable.read_bytes()
         dest_path.write_bytes(content)
 
+def configure_database(target_dir: Path, framework: str, db_choice: str):
+    """Adjust requirements.txt and .env.example based on database choice."""
+    req_file = target_dir / "requirements.txt"
+    env_file = target_dir / ".env.example"
+    
+    # 1. Update requirements.txt
+    if req_file.exists():
+        req_content = req_file.read_text(encoding="utf-8")
+        
+        # Remove default psycopg2-binary if SQLite is selected
+        if db_choice == "SQLite":
+            lines = [line for line in req_content.splitlines() if "psycopg2" not in line]
+            req_content = "\n".join(lines) + "\n"
+        elif db_choice == "PostgreSQL":
+            if "psycopg2" not in req_content:
+                lines = req_content.splitlines()
+                lines.append("psycopg2-binary>=2.9.0")
+                req_content = "\n".join(lines) + "\n"
+        elif db_choice == "MySQL":
+            lines = [line for line in req_content.splitlines() if "psycopg2" not in line]
+            if framework == "django":
+                lines.append("mysqlclient>=2.2.0")
+            else:
+                lines.append("pymysql>=1.1.0")
+                if framework == "fastapi":
+                    lines.append("cryptography>=41.0.0")
+            req_content = "\n".join(lines) + "\n"
+            
+        req_file.write_text(req_content, encoding="utf-8")
+        
+    # 2. Update .env.example (and generate .env)
+    if env_file.exists():
+        env_content = env_file.read_text(encoding="utf-8")
+        
+        if framework == "fastapi":
+            if db_choice == "SQLite":
+                env_content = env_content.replace(
+                    'DATABASE_URL="postgresql://user:password@localhost:5432/dbname"',
+                    'DATABASE_URL="sqlite:///./sql_app.db"'
+                )
+            elif db_choice == "MySQL":
+                env_content = env_content.replace(
+                    'DATABASE_URL="postgresql://user:password@localhost:5432/dbname"',
+                    'DATABASE_URL="mysql+pymysql://user:password@localhost:3306/dbname"'
+                )
+                
+        elif framework == "flask":
+            if db_choice == "PostgreSQL":
+                env_content = env_content.replace(
+                    'SQLALCHEMY_DATABASE_URI=sqlite:///instance/project.db',
+                    'SQLALCHEMY_DATABASE_URI=postgresql://user:password@localhost:5432/dbname'
+                )
+            elif db_choice == "MySQL":
+                env_content = env_content.replace(
+                    'SQLALCHEMY_DATABASE_URI=sqlite:///instance/project.db',
+                    'SQLALCHEMY_DATABASE_URI=mysql+pymysql://user:password@localhost:3306/dbname'
+                )
+                
+        elif framework == "django":
+            if db_choice == "PostgreSQL":
+                env_content = env_content.replace(
+                    'DATABASE_URL=sqlite:///db.sqlite3',
+                    'DATABASE_URL=postgres://user:password@localhost:5432/dbname'
+                )
+            elif db_choice == "MySQL":
+                env_content = env_content.replace(
+                    'DATABASE_URL=sqlite:///db.sqlite3',
+                    'DATABASE_URL=mysql://user:password@localhost:3306/dbname'
+                )
+        
+        env_file.write_text(env_content, encoding="utf-8")
+        
+        # Write .env file
+        actual_env = target_dir / ".env"
+        if not actual_env.exists():
+            actual_env.write_text(env_content, encoding="utf-8")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="setupci — Python Project Bootstrapper",
@@ -197,7 +275,25 @@ def main():
 
     project_type = {"Backend": "backend", "Simple": "simple"}[type_choice]
 
-    # ── Step 3: Confirm if directory not empty ───────────────────────────────
+    # ── Step 3: Database Selection ───────────────────────────────────────────
+    db_choice = None
+    if framework in ["fastapi", "flask", "django"] and project_type == "backend":
+        console.print()
+        db_choice = questionary.select(
+            "  Which database would you like to configure?",
+            choices=[
+                questionary.Choice("📁  SQLite     — Lightweight, file-based, zero setup", value="SQLite"),
+                questionary.Choice("🐘  PostgreSQL — Robust, enterprise SQL database",   value="PostgreSQL"),
+                questionary.Choice("🐬  MySQL      — Popular relational SQL database",      value="MySQL"),
+            ],
+            style=custom_style,
+        ).ask()
+
+        if not db_choice:
+            console.print("\n[bold red]✗  Initialization cancelled.[/bold red]")
+            sys.exit(1)
+
+    # ── Step 4: Confirm if directory not empty ───────────────────────────────
     console.print()
     if target_dir.exists() and any(target_dir.iterdir()):
         console.print(
@@ -223,6 +319,8 @@ def main():
     summary.add_column(style="#e2e8f0")
     summary.add_row("Framework:", framework_choice)
     summary.add_row("Type:",      type_choice)
+    if db_choice:
+        summary.add_row("Database:",  db_choice)
     summary.add_row("Location:",  str(target_dir))
 
     console.print(
@@ -247,6 +345,8 @@ def main():
         ) as progress:
             progress.add_task("", total=None)
             copy_template(src_path, target_dir)
+            if db_choice:
+                configure_database(target_dir, framework, db_choice)
 
         # ── Success Message ───────────────────────────────────────────────────
         console.print(
