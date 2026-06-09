@@ -7,10 +7,6 @@
 </p>
 
 <p align="center">
-  Stop setting up boilerplate from scratch. Launch your next production-ready Python project in seconds with zero configuration.
-</p>
-
-<p align="center">
   <a href="https://pypi.org/project/setupci/"><img src="https://badge.fury.io/py/setupci.svg" alt="PyPI version" /></a>
   <a href="https://github.com/syed-mujtaba-stack/setupci/actions/workflows/tests.yml"><img src="https://github.com/syed-mujtaba-stack/setupci/actions/workflows/tests.yml/badge.svg" alt="Tests status" /></a>
   <a href="https://pypi.org/project/setupci/"><img src="https://img.shields.io/pypi/pyversions/setupci.svg" alt="Python Versions" /></a>
@@ -29,6 +25,7 @@
 - 🎸 **Django Support** — Initialize modular Django and Django REST Framework structures with pre-split apps folder.
 - 🐍 **General Python** — Setup clean general-purpose Python CLI, library, or script templates using modern `pyproject.toml` packaging.
 - 🏗️ **Professional Backend Structure** — Generate comprehensive production-ready layouts that separate configuration, routing, schemas, and databases.
+- 🗄️ **Interactive Database Auto-Setup** — Choose SQLite, PostgreSQL, or MySQL; dependencies and environment variables get configured automatically.
 - 🐳 **Docker Ready** — Fully-featured multi-stage `Dockerfile` configurations included automatically.
 - 🔑 **Environment Configured** — Out-of-the-box support for dotenv (`.env` and `.env.example`) parsing.
 - 🛠️ **CRUD Starter Templates** — Pre-written SQLAlchemy models, Pydantic schemas, and sample routers to let you write business logic immediately.
@@ -68,6 +65,7 @@ Once the CLI starts, it walks you through two simple configuration choices:
 2. **Project Type Selection** — 
    - **Backend**: Generates a professional, production-ready structure complete with databases, docker files, environment separation, and CRUD examples.
    - **Simple**: A streamlined, minimal boilerplate template ideal for simple scripts, quick spikes, or lightweight integrations.
+3. **Database Selection** (Only for Backend types) — Choose between `SQLite`, `PostgreSQL`, or `MySQL`. The script auto-injects drivers and sets up `.env` connection strings.
 
 ---
 
@@ -101,9 +99,15 @@ $ setupci init .
   ● Backend  — Professional structure, Docker, env config
   ○ Simple   — Minimal boilerplate, quick start
 
+? Which database would you like to configure?
+  ● SQLite     — Lightweight, file-based, zero setup
+  ○ PostgreSQL — Robust, enterprise SQL database
+  ○ MySQL      — Popular relational SQL database
+
 ┌──────────────────────────────── 📋 Project Summary ───────────────────────────────┐
 │  Framework:  FastAPI                                                            │
 │  Type:       Backend                                                            │
+│  Database:   SQLite                                                             │
 │  Location:   E:\my-new-project                                                  │
 └──────────────────────────────────────────────────────────────────────────────────┘
 
@@ -207,7 +211,7 @@ Developers spend too much time repeating the same boilerplate setups. `setupci` 
 
 We are constantly improving `setupci`. Check out our planned roadmap:
 
-- [ ] **Database Scaffolding** — Option to auto-configure PostgreSQL, MySQL, SQLite, or MongoDB.
+- [x] **Database Scaffolding** — Auto-configure SQLite, PostgreSQL, or MySQL (MongoDB/others planned).
 - [ ] **Authentication Integration** — Bootstrap JWT/OAuth2 flows out-of-the-box.
 - [ ] **AI-Powered Templates** — Prompt-to-structure project initialization.
 - [ ] **Full-stack Support** — Pair backend frameworks with React, Vue, or Svelte frontends.
