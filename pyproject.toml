@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "setupci"
+version = "0.1.0"
+description = "A professional Python project bootstrapper CLI supporting multiple frameworks."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "Developer", email = "developer@example.com" }
+]
+dependencies = [
+    "questionary>=2.0.0",
+]
+
+[project.scripts]
+setupci = "setupci.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["setupci"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/setupci",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
