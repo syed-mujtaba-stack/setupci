@@ -10,8 +10,30 @@ readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [
-    { name = "Developer", email = "developer@example.com" }
+    { name = "syed-mujtaba-stack", email = "developer@example.com" }
 ]
+keywords = ["cli", "project-template", "scaffolding", "fastapi", "flask", "django", "bootstrap"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Code Generators",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/syed-mujtaba-stack/setupci"
+"Repository" = "https://github.com/syed-mujtaba-stack/setupci"
+"Bug Tracker" = "https://github.com/syed-mujtaba-stack/setupci/issues"
+"PyPI" = "https://pypi.org/project/setupci/"
+"Changelog" = "https://github.com/syed-mujtaba-stack/setupci/blob/main/CHANGELOG.md"
 dependencies = [
     "questionary>=2.0.0",
 ]

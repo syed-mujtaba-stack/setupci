@@ -105,3 +105,11 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) to get started
 ## 📝 License
 
 This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 🔗 Links
+
+- 🐙 **GitHub**: [github.com/syed-mujtaba-stack/setupci](https://github.com/syed-mujtaba-stack/setupci)
+- 📦 **PyPI**: [pypi.org/project/setupci](https://pypi.org/project/setupci/)
+- 🐛 **Issues**: [github.com/syed-mujtaba-stack/setupci/issues](https://github.com/syed-mujtaba-stack/setupci/issues)
