@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "setupci"
-version = "0.1.1"
+version = "0.1.2"
 description = "A professional Python project bootstrapper CLI supporting multiple frameworks."
 readme = "README.md"
 requires-python = ">=3.9"

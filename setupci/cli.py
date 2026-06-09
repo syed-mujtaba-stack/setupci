@@ -60,7 +60,7 @@ def print_banner():
         Align.center(
             Text("Python Project Bootstrapper", style="bold #e2e8f0") +
             Text("  •  ", style="#4b5563") +
-            Text("v0.1.1", style="#7c3aed")
+            Text("v0.1.2", style="#7c3aed")
         )
     )
     console.print()
