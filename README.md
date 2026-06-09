@@ -1,13 +1,9 @@
-# 🚀 setupci
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/syed-mujtaba-stack/setupci/main/assets/logo.png" alt="setupci logo" width="120" style="border-radius: 50%" />
+  <img src="https://raw.githubusercontent.com/syed-mujtaba-stack/setupci/main/assets/logo.png" alt="setupci logo" width="400" />
 </p>
 
-<h3 align="center">setupci</h3>
-
 <p align="center">
-  <strong>An interactive Python CLI tool to bootstrap professional project structures for popular Python frameworks.</strong>
+  Stop setting up boilerplate from scratch. Launch your next production-ready Python project in seconds with zero configuration.
 </p>
 
 <p align="center">
