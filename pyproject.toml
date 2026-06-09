@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "setupci"
-version = "0.1.0"
+version = "0.1.1"
 description = "A professional Python project bootstrapper CLI supporting multiple frameworks."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [
-    { name = "syed-mujtaba-stack", email = "developer@example.com" }
+    { name = "syed-mujtaba-stack", email = "abbasmujtaba125@gmail.c" }
 ]
 keywords = ["cli", "project-template", "scaffolding", "fastapi", "flask", "django", "bootstrap"]
 classifiers = [
@@ -27,6 +27,9 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Code Generators",
 ]
+dependencies = [
+    "questionary>=2.0.0",
+]
 
 [project.urls]
 "Homepage" = "https://github.com/syed-mujtaba-stack/setupci"
@@ -34,9 +37,6 @@ classifiers = [
 "Bug Tracker" = "https://github.com/syed-mujtaba-stack/setupci/issues"
 "PyPI" = "https://pypi.org/project/setupci/"
 "Changelog" = "https://github.com/syed-mujtaba-stack/setupci/blob/main/CHANGELOG.md"
-dependencies = [
-    "questionary>=2.0.0",
-]
 
 [project.scripts]
 setupci = "setupci.cli:main"
@@ -51,4 +51,3 @@ include = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-
